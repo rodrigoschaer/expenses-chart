@@ -29,9 +29,23 @@ export default function App() {
     },
   ];
 
+  type ExpenseData = {
+    title: string;
+    amount: number;
+    date: Date;
+  };
+
+  const handleAddExpense = (enteredExpense: ExpenseData) => {
+    const expenseData = {
+      ...enteredExpense,
+      id: Math.random().toString(),
+    };
+    console.log(expenseData);
+  };
+
   return (
     <div>
-      <NewExpense />
+      <NewExpense onAddExpense={handleAddExpense} />
       <Expense expenses={expensesOptions} />
     </div>
   );

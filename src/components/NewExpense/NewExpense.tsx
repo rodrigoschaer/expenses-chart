@@ -2,7 +2,11 @@ import React from "react";
 import { ExpenseForm } from "./ExpenseForm";
 import "./NewExpense.scss";
 
-export const NewExpense = () => {
+type ParentProps = {
+  onAddExpense: any;
+};
+
+export const NewExpense = (props: ParentProps) => {
   type ExpenseData = {
     title: string;
     amount: number;
@@ -15,6 +19,7 @@ export const NewExpense = () => {
       id: Math.random().toString(),
     };
     console.log(expenseData);
+    props.onAddExpense(expenseData);
   };
 
   return (
