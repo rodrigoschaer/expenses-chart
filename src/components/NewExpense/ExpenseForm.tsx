@@ -3,6 +3,7 @@ import "./ExpenseForm.scss";
 
 type ParentProps = {
   onSaveExpenseData: any;
+  onCancel: any;
 };
 
 export const ExpenseForm = (props: ParentProps) => {
@@ -27,7 +28,7 @@ export const ExpenseForm = (props: ParentProps) => {
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 
@@ -72,6 +73,9 @@ export const ExpenseForm = (props: ParentProps) => {
       </div>
       <div className="new-expense__actions">
         <button type="submit">Add Expense</button>
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
       </div>
     </form>
   );

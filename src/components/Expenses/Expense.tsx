@@ -1,8 +1,11 @@
-import { Card } from "../UI/Card";
-import { ExpenseItem } from "./ExpenseItem";
-import "./Expense.scss";
-import { ExpenseFilter } from "./ExpenseFilter";
 import { useState } from "react";
+
+import "./Expense.scss";
+
+import { Card } from "../UI/Card";
+import { ExpensesList } from "./ExpensesList";
+import { ExpenseFilter } from "./ExpenseFilter";
+import { ExpensesChart } from "./ExpensesChart";
 
 type ExpenseItemType = {
   id?: string;
@@ -16,16 +19,15 @@ type ExpenseProps = {
 };
 
 export const Expense = (props: ExpenseProps) => {
-  const [filteredYear, setFilteredYear] = useState("2020");
+  const [filteredYear, setFilteredYear] = useState("2021");
 
   const handleExpenseFilter = (selectedYear: string) => {
     setFilteredYear(selectedYear);
   };
 
-  const filteredExpenses = props.expenses.filter((expense) => {
+  const filteredExpenses = props.expenses.filter((expense: ExpenseItemType) => {
     return expense.date.getFullYear().toString() === filteredYear;
   });
-
   return (
     <>
       <Card className="expenses">
@@ -33,16 +35,8 @@ export const Expense = (props: ExpenseProps) => {
           selected={filteredYear}
           onDropDownChange={handleExpenseFilter}
         />
-        {filteredExpenses.length === 0 && <p>No values to return</p>}
-        {filteredExpenses.length !== 0 &&
-          filteredExpenses.map((expense: ExpenseItemType) => (
-            <ExpenseItem
-              key={expense.id}
-              title={expense.title}
-              date={expense.date}
-              amount={expense.amount}
-            />
-          ))}
+        <ExpensesChart expenses={filteredExpenses} />
+        <ExpensesList filtered={filteredExpenses} />
       </Card>
     </>
   );
