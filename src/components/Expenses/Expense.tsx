@@ -22,6 +22,10 @@ export const Expense = (props: ExpenseProps) => {
     setFilteredYear(selectedYear);
   };
 
+  const filteredExpenses = props.expenses.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
   return (
     <>
       <Card className="expenses">
@@ -29,14 +33,16 @@ export const Expense = (props: ExpenseProps) => {
           selected={filteredYear}
           onDropDownChange={handleExpenseFilter}
         />
-
-        {props.expenses.map((expense: ExpenseItemType) => (
-          <ExpenseItem
-            title={expense.title}
-            date={expense.date}
-            amount={expense.amount}
-          />
-        ))}
+        {filteredExpenses.length === 0 && <p>No values to return</p>}
+        {filteredExpenses.length !== 0 &&
+          filteredExpenses.map((expense: ExpenseItemType) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              date={expense.date}
+              amount={expense.amount}
+            />
+          ))}
       </Card>
     </>
   );
